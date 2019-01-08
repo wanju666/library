@@ -1,8 +1,21 @@
 <script>
+import {get} from './util'
+// import config from './config'
+
 export default {
-    created(){
-        console.log("小程序启动了");
-    }
+  async created () {
+    const res = await get('/weapp/demo')
+    console.log(123, res)
+
+    // wx.request({
+    //     url: config.host + '/weapp/demo',
+    //     success: function (res) {
+    //         console.log(res)
+    //     }
+    // })
+
+    console.log('小程序启动了')
+  }
 }
 </script>
 
