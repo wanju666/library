@@ -1,13 +1,14 @@
 <template>
     <div>
         图书页面
-        <button open-type="getUserInfo" lang="zh_CN" @getuserinfo="doLogin">获取用户信息</button>
+        <button class="btn" open-type="getUserInfo" lang="zh_CN" @getuserinfo="doLogin">获取用户信息</button>
     </div>
 </template>
 
 <script>
 import qcloud from 'wafer2-client-sdk'
 import config from '../../config'
+import {showSuccess} from '../../util'
 
 export default {
     methods:{
@@ -31,11 +32,17 @@ export default {
                 // 首次登录
                 qcloud.setLoginUrl(config.loginUrl);
                 qcloud.login({
-                    success: function (userInfo) {
-                        console.log('登录成功', userInfo);
+                    success: function (userinfo) {
+                        console.log('登录成功', userinfo);
+                        // util工具函数-显示弹窗
+                        showSuccess('登录成功');
+                        // 缓存数据
+                        wx.setStorageSync('userinfo', userinfo);
+                        
                     },
                     fail: function (err) {
                         console.log('登录失败', err);
+
                     }
                 });
             }

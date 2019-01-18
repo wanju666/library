@@ -1,13 +1,13 @@
 {
     "pages": [
-        "pages/books/main",
+        "pages/me/main",
         "pages/comment/main",
-        "pages/me/main"
+        "pages/books/main"
     ],
     "window": {
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#ea5149",
-        "navigationBarTitleText": "蜗牛图书",
+        "navigationBarTitleText": "玩具图书",
         "navigationBarTextStyle": "light"
     },
     "tabBar": {

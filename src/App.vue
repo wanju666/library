@@ -1,11 +1,11 @@
 <script>
-import {get} from './util'
+// import {get} from './util'
 // import config from './config'
 
 export default {
   async created () {
-    const res = await get('/weapp/demo')
-    console.log(123, res)
+    // const res = await get('/weapp/demo')
+    // console.log(123, res)
 
     // wx.request({
     //     url: config.host + '/weapp/demo',
@@ -20,5 +20,16 @@ export default {
 </script>
 
 <style>
-
+.btn{
+  color: white;
+  background-color: #ea5149;
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  line-height: 60rpx;
+  height: 60rpx;
+  width: 100%;
+}
+.btn:active{
+  background-color: #fa5149;
+}
 </style>
