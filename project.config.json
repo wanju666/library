@@ -13,6 +13,7 @@
 	"compileType": "miniprogram",
 	"appid": "wx28a40cf672267f42",
 	"projectname": "library",
+	"libVersion": "2.5.1",
 	"condition": {
 		"search": {
 			"current": -1,
