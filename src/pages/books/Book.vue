@@ -1,56 +1,65 @@
 <template>
-    <div>
-        图书页面
-        <!-- <button class="btn" open-type="getUserInfo" lang="zh_CN" @getuserinfo="doLogin">获取用户信息</button> -->
-    </div>
+  <div>
+    <Card v-for="book in books" :key="book.id" :book="book"></Card>
+    <p class="text-footer" v-if='!more'>
+      没有更多数据
+    </p>
+  </div>
 </template>
 
 <script>
-// import qcloud from 'wafer2-client-sdk'
-// import config from '../../config'
-// import {showSuccess} from '../../util'
+import { get } from "@/util";
+import Card from "@/components/Card";
 
 export default {
+  components: {
+    Card
+  },
+  data() {
+    return {
+      books: [],
+      page: 0,
+      more: true
+    };
+  },
   methods: {
-    // doLogin: function () {
-    //     const session = qcloud.Session.get()
-
-    //     if (session) {
-    //         // 第二次登录
-    //         // 或者本地已经有登录状态
-    //         // 可使用本函数更新登录状态
-    //         qcloud.loginWithCode({
-    //             loginUrl: config.loginUrl,
-    //             success: function (userInfo) {
-    //                 console.log('已经登录成功', userInfo);
-    //             },
-    //             fail: function (err) {
-    //                 console.log('登录失败', err);
-    //             }
-    //         })
-    //     } else {
-    //         // 首次登录
-    //         qcloud.setLoginUrl(config.loginUrl);
-    //         qcloud.login({
-    //             success: function (userinfo) {
-    //                 console.log('登录成功', userinfo);
-    //                 // util工具函数-显示弹窗
-    //                 showSuccess('登录成功');
-    //                 // 缓存数据
-    //                 wx.setStorageSync('userinfo', userinfo);
-
-    //             },
-    //             fail: function (err) {
-    //                 console.log('登录失败', err);
-
-    //             }
-    //         });
-    //     }
-    // }
+    async getList(init) {
+      if(init){
+        this.page = 0
+        this.more = true
+      }
+      wx.showNavigationBarLoading()
+      const books = await get("/weapp/booklist", {page: this.page});
+      if(books.list.length<10 && this.page>0){
+        this.more = false
+      }
+      if(init){
+        this.books = books.list
+        wx.stopPullDownRefresh()
+      } else {
+        // 下拉刷新，不能直接覆盖books
+        this.books = this.books.concat(books.list)
+      }
+      wx.hideNavigationBarLoading()
+    },
+  },
+  onPullDownRefresh(){
+    this.getList(true);
+  },
+  onReachBottom(){
+    if(!this.more){
+      // 没有更多
+      return false
+    }
+    this.page = this.page+1
+    this.getList()
+  },
+  mounted() {
+    this.getList(true);
   }
-}
+};
 </script>
 
-<style>
+<style lang='scss'>
 
 </style>

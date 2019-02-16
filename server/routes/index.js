@@ -37,4 +37,8 @@ router.get('/demo', controllers.demo)
 // POST 新增图书
 router.post('/addbook', controllers.addbook)
 
+// GET 获取列表数据
+router.get('/booklist', controllers.booklist)
+
+
 module.exports = router
